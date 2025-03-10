@@ -11,4 +11,20 @@
 
 3. Button to restart or logout of account
 
-4. Players will log in with their username and passcode
+4. Players will log in with their username and password
+
+## Plan for implementation
+
+### Front End
+- Don't store data in database yet, but in a list, 
+- Using component not function hook
+- Create component for a generic card
+- Use map to create 52 cards
+- Create component for the display of the cards
+- Create component for timer
+- Create component to display the user name and fastest time
+- Modals for restart and logout
+
+### Back End
+- Flask server to connect
+- psql for database
