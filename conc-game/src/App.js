@@ -4,8 +4,10 @@ import Jack_of_clubs from './images/jack_of_clubs.png';
 import Jack_of_spades from './images/jack_of_spades.png';
 import './App.css';
 import { Component } from 'react';
-import {Row, Col, Container} from 'reactstrap';
 import PlayingCard from './PlayingCard';
+import BoardTable  from './BoardTable';
+import { Col } from 'reactstrap';
+
 
 class App extends Component{
   // Need to store the first clicked card, and then have callback functions given to PlayingCards
@@ -41,8 +43,8 @@ class App extends Component{
   };
 
   // Not in state because not used as any components prop
-  firstCardId = -1
-
+  firstCardId = -1;
+  firstCard = null;
 
   constructor(props)
   {
@@ -51,73 +53,73 @@ class App extends Component{
         showRestartModal: false,
         numPairs: 0,
         cardsInfo: this.committedCards
-      };        
+      };  
+      // Prof rabb things v     
       //No state needed for updates??
   }
 
   // To update cards after player does stuff
-  update = () => {
-    this.cards = Object.entries(this.committedCards).map(([key, value]) =>
-      <Col>
-        <PlayingCard id={key.toString()} card={value} callback={this.handleClick}></PlayingCard>
-      </Col>
-    );
-  }
+  // update = () => {
+  //   return Object.entries(this.state.cardsInfo).map(([key, value]) =>
+  //     <Col>
+  //       <PlayingCard id={key} card={value} callback={this.handleClick}></PlayingCard>
+  //     </Col>
+  //   );
+  // }
 
   // id is the key of the card
   // While working on this function, it would usually take two clicks to get the card to flip.
   // But after getting rid of some unnecessary uses of this.state.firstCardId, started doing it on one click for some reason
-  handleClick = (id) => {
-  
-    if (this.firstCardId == id){
+  handleClick = (id, card) => {
+    console.log(this.committedCards);
+    if (this.firstCardId === id){
       console.log("bruh");
     }
     else if (this.firstCardId === -1){
       // For some reason, even tho we already set firstCardId, we can't use it. So I'm just using id instaed, which makes more sense honestly
       this.firstCardId = id;
+      this.firstCard = card;
+
       // console.log("yo");
       // console.log(this.state.cardsInfo[id]["code"]);
 
       // Flipping selected card
       this.state.cardsInfo[id]["isFlipped"] = true;
     
-      this.setState({cards: this.cards});
-      this.update();
+      this.setState({cardsInfo: this.cardsInfo});
+
     }
-    else if (this.state.cardsInfo[id]["code"] === this.state.cardsInfo[this.firstCardId]["code"]){ // Matched
+    else if (this.committedCards[id]["code"] === this.committedCards[this.firstCardId]["code"]){ // Matched
       console.log("Matched!!!!");
       this.setState({numPairs: this.state.numPairs + 1});
-      this.firstCardId = -1
-      this.state.cardsInfo[id]["isFlipped"] = true;
+      this.firstCardId = -1;
+      this.committedCards[id]["isFlipped"] = true;
       
       console.log(this.state.numPairs);
       
-      this.setState({cards: this.cards});
-      this.update();
+      this.setState({cardsInfo: this.committedCards});
     }
     else{ // Not a match, reset firstCardId. 
       console.log("Not Matched!!!!");
       // flip both cards back
-      this.state.cardsInfo[id]["isFlipped"] = false;
-      this.state.cardsInfo[this.firstCardId]["isFlipped"] = false;
+      // this.state.cardsInfo[id]["isFlipped"] = false;
+
+      // By giving parameter to get the actual first card selected as component, I can straight up manipulate it from App
+      this.firstCard.props.card["isFlipped"] = false;
+      this.firstCard.flip();
+
+      console.log(this.committedCards[this.firstCardId]["code"] + ": " + this.committedCards[this.firstCardId]["isFlipped"]);
 
       // reset to choose new first card
       this.firstCardId = -1;
 
-      console.log(this.state.cardsInfo[id]["isFlipped"]);
+  
 
-      this.setState({cardsInfo: this.state.cardsInfo});
-      this.update();
+      this.setState({cardsInfo: this.committedCards});
 
     }
   }
 
-  // handleClick needs to be before for this to work
-  cards = Object.entries(this.committedCards).map(([key, value]) =>
-    <Col>
-      <PlayingCard id={key.toString()} card={value} callback={this.handleClick}></PlayingCard>
-    </Col>
-  );
 
   // Function to check if number of pairs is = to constant variable of number of pairs needed to win
   checkGameOver = () => {
@@ -128,12 +130,7 @@ class App extends Component{
   return (
     <div className="App">
       {this.state.numPairs}
-      <Container>
-        <Row xs="1" sm="1" md="2" lg="4">
-          {this.cards}
-        </Row>
-      </Container>
-
+      <BoardTable cards={this.state.cardsInfo} callback={this.handleClick} updateKey={this.state.numPairs}></BoardTable>
     </div>
   )
 }

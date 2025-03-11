@@ -7,16 +7,28 @@ class PlayingCard extends Component {
 
     constructor(props){
         super(props);
-        this.state={nameOfClass: "card-inner"}
+        if (this.props.card["isFlipped"] === true){
+            this.state= {nameOfClass: "card-inner is-flipped"};
+        }
+        else{
+            console.log(this.props.card["code"] + " should be flipping to back now...");
+            this.state = {nameOfClass: "card-inner"};
+        }
     }
 
     handleClick = () => {
-        this.props.callback(this.props.id);
+        this.props.callback(this.props.id, this);
 
+        this.flip();
+    }
+
+    flip = () => {
+        console.log("yooooooogoogog");
         if (this.props.card["isFlipped"] === true){
             this.setState({nameOfClass: "card-inner is-flipped"});
         }
         else{
+            console.log(this.props.card["code"] + " should be flipping to back now...");
             this.setState({nameOfClass: "card-inner"});
         }
     }
@@ -40,4 +52,4 @@ class PlayingCard extends Component {
 
 }
 
-export default PlayingCard
+export default PlayingCard;
