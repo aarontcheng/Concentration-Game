@@ -23,13 +23,13 @@ class PlayingCard extends Component {
     }
 
     flip = () => {
-        console.log("yooooooogoogog");
+        // console.log("flip() called");
         if (this.props.card["isFlipped"] === true){
             this.nameOfClass = "card-inner is-flipped";
             return "card-inner is-flipped";
         }
         else{
-            console.log(this.props.card["code"] + " should be flipping to back now...");
+            // console.log(this.props.card["code"] + " should be flipping to back now...");
             this.nameOfClass =  "card-inner";
             return "card-inner";
         }
@@ -37,7 +37,6 @@ class PlayingCard extends Component {
 
     componentDidUpdate = () =>{
         this.flip();
-        console.log("flipppp");
     }
 
 

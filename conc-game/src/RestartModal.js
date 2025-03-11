@@ -8,7 +8,7 @@ class RestartModal extends Component{
         this.state = {username: "", password: ""};
     }
 
-    toggle = () =>
+    restart = () =>
     {
         this.props.restart();
         // reset defaults
@@ -50,7 +50,7 @@ class RestartModal extends Component{
                 </InputGroup>
             </ModalBody>
             <ModalFooter>
-                <Button color="secondary" onClick={this.toggle}>Restart</Button>
+                <Button color="secondary" onClick={this.restart}>Restart</Button>
                 <Button color="primary" onClick={this.login}>Login</Button>
             </ModalFooter>
 

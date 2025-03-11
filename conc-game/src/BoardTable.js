@@ -5,13 +5,7 @@ import PlayingCard from './PlayingCard';
 
 
 class BoardTable extends Component {
-
-    constructor(props){
-        super(props);
-        console.log("hellooooo?");
-    }
-
-    // Bringing it to main app, which has the list of card info
+  // Bringing it to main app, which has the list of card info
     handleClick = (id, card) => {
       this.props.callback(id, card);
     }
@@ -25,16 +19,11 @@ class BoardTable extends Component {
         </Col>
       );
     };
-    
-
-    componentDidUpdate = () =>{
-      console.log("it is updating");
-    }
 
 
     render() {
       return <div className="BoardTable">
-       <Container style={{backgroundColor: "brown", width: "45pc", height: "60pc"}}>
+       <Container style={{backgroundColor: "brown", width: "45pc", height: "40pc"}}>
         <Row>
           {this.update()}
         </Row>
