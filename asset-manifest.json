@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Concentration-Game/static/css/main.ce657579.css",
-    "main.js": "/Concentration-Game/static/js/main.e2b490c3.js",
+    "main.js": "/Concentration-Game/static/js/main.1f957eed.js",
     "static/js/453.90a83712.chunk.js": "/Concentration-Game/static/js/453.90a83712.chunk.js",
     "static/media/ace_of_spades.png": "/Concentration-Game/static/media/ace_of_spades.a24049b6038d0a8b2cc2.png",
     "static/media/10_of_clubs.png": "/Concentration-Game/static/media/10_of_clubs.1e849b9251f1cca97075.png",
@@ -57,11 +57,11 @@
     "static/media/2_of_diamonds.png": "/Concentration-Game/static/media/2_of_diamonds.a51b192d2f2ba1fc1d53.png",
     "index.html": "/Concentration-Game/index.html",
     "main.ce657579.css.map": "/Concentration-Game/static/css/main.ce657579.css.map",
-    "main.e2b490c3.js.map": "/Concentration-Game/static/js/main.e2b490c3.js.map",
+    "main.1f957eed.js.map": "/Concentration-Game/static/js/main.1f957eed.js.map",
     "453.90a83712.chunk.js.map": "/Concentration-Game/static/js/453.90a83712.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ce657579.css",
-    "static/js/main.e2b490c3.js"
+    "static/js/main.1f957eed.js"
   ]
 }
