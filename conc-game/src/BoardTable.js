@@ -34,7 +34,6 @@ class BoardTable extends Component {
 
     render() {
       return <div className="BoardTable">
-        yoooo
        <Container>
         <Row xs="4" sm="4" md="8" lg="16">
           {this.update()}

@@ -18,87 +18,25 @@ class App extends Component{
   // setState info: GOAT https://www.reddit.com/r/react/comments/u5wzbu/components_not_rerendering_with_state_changes/
   //setState does shallow equality check before actually updating, so I will need to make a new map using new Map(existingMap)
 
-  // for restart(), to easily reset to initial
-  copyCommittedCards = new Map([
-    [0, {"code": "JackRed", "imagePath": Jack_of_hearts, "isFlipped": false, "solved": false}],
-    [1, {
-      "code": "JackRed", 
-      "imagePath": Jack_of_diamonds, 
-      "isFlipped": false,
-      "solved": false
-    }],
-    [2, {
-      "code": "JackBlack", 
-      "imagePath": Jack_of_clubs, 
-      "isFlipped": false,
-      "solved": false
-    }],
-    [3, {
-      "code": "JackBlack", 
-      "imagePath": Jack_of_spades, 
-      "isFlipped": false,
-      "solved": false
-    }]
-  ]
-  );
-
   committedCards = new Map([
-    [1, {"code": "JackRed", "imagePath": Jack_of_hearts, "isFlipped": false, "solved": false}],
-    [0, {
-      "code": "JackRed", 
-      "imagePath": Jack_of_diamonds, 
-      "isFlipped": false,
-      "solved": false
-    }],
-    [2, {
-      "code": "JackBlack", 
-      "imagePath": Jack_of_clubs, 
-      "isFlipped": false,
-      "solved": false
-    }],
-    [3, {
-      "code": "JackBlack", 
-      "imagePath": Jack_of_spades, 
-      "isFlipped": false,
-      "solved": false
-    }]
+    [0, {"code": "JackRed", "imagePath": Jack_of_hearts, "isFlipped": false, "solved": false}],
+    [1, {"code": "JackRed", "imagePath": Jack_of_diamonds, "isFlipped": false, "solved": false}],
+    [2, {"code": "JackBlack", "imagePath": Jack_of_clubs, "isFlipped": false, "solved": false}],
+    [3, {"code": "JackBlack", "imagePath": Jack_of_spades, "isFlipped": false,"solved": false}]
   ]
   );
 
+  // For randomly shuffling cards
   compareFn(a, b){
     return Math.floor(Math.random() * (2 - 0) ) + 0 - 1; // return random integer for -1 to 1
   }
-  // https://stackoverflow.com/questions/31158902/is-it-possible-to-sort-a-es6-map-object?noredirect=1&lq=1
-  randomMap = new Map([...this.committedCards.entries()].sort(this.compareFn));
-  
-  // This is not iterable, is actually just an object
-  // committedCards = {
-  //   0: {
-  //     "code": "JackRed", 
-  //     "imagePath": Jack_of_hearts, 
-  //     "isFlipped": false,
-  //     "solved": false
-  //   },
-  //   1: {
-  //     "code": "JackRed", 
-  //     "imagePath": Jack_of_diamonds, 
-  //     "isFlipped": false,
-  //     "solved": false
-  //   },
-  //   2: {
-  //     "code": "JackBlack", 
-  //     "imagePath": Jack_of_clubs, 
-  //     "isFlipped": false,
-  //     "solved": false
-  //   },
-  //   3: {
-  //     "code": "JackBlack", 
-  //     "imagePath": Jack_of_spades, 
-  //     "isFlipped": false,
-  //     "solved": false
-  //   }
 
-  // };
+  shuffle = () =>{
+    this.committedCards = new Map([...this.committedCards.entries()].sort(this.compareFn));
+  }
+  // https://stackoverflow.com/questions/31158902/is-it-possible-to-sort-a-es6-map-object?noredirect=1&lq=1
+  // initial shuffler
+  committedCards = new Map([...this.committedCards.entries()].sort(this.compareFn));
 
   // Not in state because not used as any components prop
   firstCardId = -1;
@@ -107,6 +45,7 @@ class App extends Component{
   PAIRS_TO_WIN = 2;
   numPairs = 0;
 
+  // To prevent clicking other cards while showing wrong match
   showingWrongMatch = false;
 
   constructor(props)
@@ -114,9 +53,11 @@ class App extends Component{
       super(props);
       this.state = {
         showRestartModal: false,
-        cardsInfo: this.committedCards
+        cardsInfo: this.committedCards,
+        initialTime: Date.now(),
+        finalTime: Date.now()
       };  
-      this.randomMap.forEach((values, key) => {console.log(values, key)})
+      // this.committedCards.forEach((values, key) => {console.log(values, key)})
   }
 
   // To update cards after player does stuff
@@ -189,7 +130,7 @@ class App extends Component{
 
       // For delay, adn to not let player select cards while in delay
       this.showingWrongMatch = true;
-      await this.sleep(3000);
+      await this.sleep(1000);
       this.showingWrongMatch = false;
 
       // By giving parameter to get the actual first card selected as component, I can straight up manipulate it from App
@@ -223,8 +164,9 @@ class App extends Component{
   // Function to check if number of pairs is = to constant variable of number of pairs needed to win
   checkGameOver = () => {
     if (this.numPairs === this.PAIRS_TO_WIN){
-      // For each card, go through the list and set each one back to default values
-      this.setState({showRestartModal: true});
+
+      // get the time now so give to restart modal for final time
+      this.setState({showRestartModal: true, finalTime: Date.now()});
       console.log("Yay");
     }
   }
@@ -233,9 +175,11 @@ class App extends Component{
     this.setState({showRestartModal: false});
   }
 
-  restart = () =>{
+  restart = async () =>{
     // Create copy of committedCards and then alter it. Then the setState will work. Before, I just had a copyCommittedCards that I would just make a new map of and then setState with it, but the copyCommittedCards ended up changing after the first restart, so couldn't do that
+    
     var newMap = new Map(this.committedCards);
+    console.log("176");
     newMap.forEach((values, key) => {newMap.get(key)["solved"] = false; newMap.get(key)["isFlipped"] = false;});
     
     this.setState({cardsInfo: new Map(newMap)});
@@ -243,8 +187,14 @@ class App extends Component{
     this.numPairs = 0;
     this.turnOffRestart();
     console.log("restarting...");
-    console.log(this.committedCards.get(0));
-    console.log(this.copyCommittedCards.get(0));
+    this.shuffle();
+    var secondNewMap = new Map(this.committedCards);
+
+    // TO prevent pplayer from seeing the new order of cards when they flip back
+    await this.sleep(1000);
+    this.setState({cardsInfo: new Map(secondNewMap), initialTime: Date.now(), finalTime: Date.now()})
+    // console.log(this.committedCards.get(0));
+    
   }
 
   login = () =>{
@@ -256,7 +206,7 @@ class App extends Component{
     <div className="App">
       {this.numPairs}
       <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
-      <RestartModal restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>
+      <RestartModal initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>
     </div>
   )
 }

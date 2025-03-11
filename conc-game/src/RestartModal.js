@@ -30,9 +30,15 @@ class RestartModal extends Component{
         this.setState({username: e.target.value});
     }
 
+    getTime = () =>{
+        console.log("finalTime: " + this.props.finalTime);
+        console.log("initialTime: " + this.props.initialTime);
+        return (this.props.finalTime - this.props.initialTime)/1000;
+    }
+
     render(){
         return <Modal isOpen={this.props.showModal} toggle={this.props.restart}>
-            <ModalHeader>Switch User or Restart</ModalHeader>
+            <ModalHeader>You Win!!! Time: {this.getTime()} seconds</ModalHeader>
             <ModalBody>
                 <InputGroup>
                     <InputGroupText>Username</InputGroupText>
@@ -52,4 +58,4 @@ class RestartModal extends Component{
     }
 }
 
-export default RestartModal
+export default RestartModal;
