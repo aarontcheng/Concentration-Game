@@ -11,10 +11,13 @@ class PlayingCard extends Component {
     }
 
     handleClick = () => {
-        let code = this.props.callback(this.props.id);
+        this.props.callback(this.props.id);
 
-        if (code === 1){
+        if (this.props.card["isFlipped"] === true){
             this.setState({nameOfClass: "card-inner is-flipped"});
+        }
+        else{
+            this.setState({nameOfClass: "card-inner"});
         }
     }
 

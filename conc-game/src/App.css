@@ -6,6 +6,13 @@
 /* Flipping card css */
 /* How do I make this work for on click? */
 /* Need it to flip when I change the class pretty much */
+
+img{
+  width: 64px;
+  height: 96px;
+  
+}
+
 .card {
   background-color: transparent;
   width: 64px;
