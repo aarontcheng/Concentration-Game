@@ -198,7 +198,7 @@ class App extends Component{
   handleClick = async (id, card) => {
     // console.log(this.committedCards);
     // If you're selecting same or card is already matched, won't do anything
-    if (this.firstCardId === id || card.props.card["solved"] === true || this.showingWrongMatch){
+    if (this.firstCardId === id || card.props.card["solved"] === true || this.showingWrongMatch || this.state.gameOver === true){
       console.log("bruh");
     }
     else if (this.firstCardId === -1){
@@ -301,23 +301,31 @@ class App extends Component{
   restart = async () =>{
     // Create copy of committedCards and then alter it. Then the setState will work. Before, I just had a copyCommittedCards that I would just make a new map of and then setState with it, but the copyCommittedCards ended up changing after the first restart, so couldn't do that
     
+    // To not let user click any more cards, lest they break it while the states finishing up
+    this.setState({gameOver: true});
+
     var newMap = new Map(this.committedCards);
     // console.log("176");
     newMap.forEach((values, key) => {newMap.get(key)["solved"] = false; newMap.get(key)["isFlipped"] = false;});
     
+    // Reset to default values
     this.setState({cardsInfo: new Map(newMap)});
     this.committedCards = new Map(newMap);
     this.numPairs = 0;
     this.turnOffRestart();
+    this.firstCardId = -1;
     // console.log("restarting...");
+    await this.sleep(1000);
     
     var secondNewMap = new Map(this.committedCards);
-    this.shuffle(secondNewMap);
+    secondNewMap = this.shuffle(secondNewMap);
+    
 
     // TO prevent pplayer from seeing the new order of cards when they flip back
-    await this.sleep(1000);
-    this.setState({cardsInfo: new Map(secondNewMap), initialTime: Date.now(), finalTime: Date.now(), gameOver: false})
     
+
+    this.setState({cardsInfo: secondNewMap, initialTime: Date.now(), finalTime: Date.now(), gameOver: false})
+    this.committedCards = secondNewMap;
     // To reset timer, since modal doesn't have access to stopwatch
     this.state.stopwatch.onClickReset();
     // console.log(this.committedCards.get(0));
