@@ -20,8 +20,8 @@ class BoardTable extends Component {
     // Which allows  it to work with .map
     update = () => {
       return this.props.cards.entries().map(([key, value]) =>
-        <Col>
-          <PlayingCard id={key} card={value} callback={this.handleClick}></PlayingCard>
+        <Col style={{padding: "0px"}}>
+          <PlayingCard style={{size: "auto"}} id={key} card={value} callback={this.handleClick}></PlayingCard>
         </Col>
       );
     };
@@ -34,8 +34,8 @@ class BoardTable extends Component {
 
     render() {
       return <div className="BoardTable">
-       <Container>
-        <Row xs="4" sm="4" md="8" lg="16">
+       <Container style={{backgroundColor: "brown", width: "45pc", height: "60pc"}}>
+        <Row>
           {this.update()}
         </Row>
       </Container>

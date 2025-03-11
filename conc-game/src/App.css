@@ -8,22 +8,19 @@
 /* Need it to flip when I change the class pretty much */
 
 img{
-  width: 64px;
-  height: 96px;
-  
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .card {
   background-color: transparent;
   width: 64px;
   height: 96px;
-  border: 1px solid #f1f1f1;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
 /* This container is needed to position the front and back side */
 .card-inner {
-  position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
