@@ -10,7 +10,7 @@ class RestartModal extends Component{
 
     toggle = () =>
     {
-        this.props.cancel();
+        this.props.restart();
         // reset defaults
         this.setState({name: "", password: ""});
     }
@@ -18,7 +18,7 @@ class RestartModal extends Component{
     // callback function will make POST request to Login path with username and password in body. Then 
     // App.js will get a token to save to its state, which it will use for getting just the user's fastest time for npw
     login = () =>{
-        this.props.callback();
+        this.props.login();
     }
 
     // The e is what gets what's inside the element
@@ -31,7 +31,7 @@ class RestartModal extends Component{
     }
 
     render(){
-        return <Modal isOpen={this.props.showModal} toggle={this.props.cancel}>
+        return <Modal isOpen={this.props.showModal} toggle={this.props.restart}>
             <ModalHeader>Switch User or Restart</ModalHeader>
             <ModalBody>
                 <InputGroup>

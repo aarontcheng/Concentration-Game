@@ -16,11 +16,21 @@ class BoardTable extends Component {
       this.props.callback(id, card);
     }
 
-    playingCards = Object.entries(this.props.cards).map(([key, value]) =>
+
+    // The map's entries() method turns it into iterable
+    // Which allows  it to work with .map
+    update = () => {
+      return this.props.cards.entries().map(([key, value]) =>
         <Col>
           <PlayingCard id={key} card={value} callback={this.handleClick}></PlayingCard>
         </Col>
     );
+    };
+    
+
+    componentDidUpdate = () =>{
+      console.log("it is updating");
+    }
 
 
     render() {
@@ -28,7 +38,7 @@ class BoardTable extends Component {
         yoooo
        <Container>
         <Row xs="4" sm="4" md="8" lg="16">
-          {this.playingCards}
+          {this.update()}
         </Row>
       </Container>
 
