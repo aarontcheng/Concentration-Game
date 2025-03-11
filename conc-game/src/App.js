@@ -18,8 +18,8 @@ class App extends Component{
   // setState info: GOAT https://www.reddit.com/r/react/comments/u5wzbu/components_not_rerendering_with_state_changes/
   //setState does shallow equality check before actually updating, so I will need to make a new map using new Map(existingMap)
 
-  // set to state variable to make constructor cleaner
-  committedCards = new Map([
+  // for restart(), to easily reset to initial
+  copycommittedCards = new Map([
     [0, {"code": "JackRed", "imagePath": Jack_of_hearts, "isFlipped": false, "solved": false}],
     [1, {
       "code": "JackRed", 
@@ -42,6 +42,30 @@ class App extends Component{
   ]
   );
 
+  committedCards = new Map([
+    [1, {"code": "JackRed", "imagePath": Jack_of_hearts, "isFlipped": false, "solved": false}],
+    [0, {
+      "code": "JackRed", 
+      "imagePath": Jack_of_diamonds, 
+      "isFlipped": false,
+      "solved": false
+    }],
+    [2, {
+      "code": "JackBlack", 
+      "imagePath": Jack_of_clubs, 
+      "isFlipped": false,
+      "solved": false
+    }],
+    [3, {
+      "code": "JackBlack", 
+      "imagePath": Jack_of_spades, 
+      "isFlipped": false,
+      "solved": false
+    }]
+  ]
+  );
+  randomMap = new Map([...this.committedCards.entries()].sort());
+  
   // This is not iterable, is actually just an object
   // committedCards = {
   //   0: {
@@ -85,7 +109,7 @@ class App extends Component{
         showRestartModal: false,
         cardsInfo: this.committedCards
       };  
-
+      this.randomMap.forEach((values, key) => {console.log(values, key)})
   }
 
   // To update cards after player does stuff
@@ -200,6 +224,8 @@ class App extends Component{
   }
 
   restart = () =>{
+    this.setState({cardsInfo: new Map(this.copycommittedCards)});
+    this.numPairs = 0;
     this.turnOffRestart();
   }
 
