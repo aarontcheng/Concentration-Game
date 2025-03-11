@@ -86,30 +86,30 @@ class App extends Component{
     [2, {"code": "AceRed", "imagePath": ace_of_clubs, "isFlipped": false, "solved": false}],
     [3, {"code": "AceRed", "imagePath": ace_of_spades, "isFlipped": false,"solved": false}],
 
-    // [4, {"code": "2Black", "imagePath": two_of_spades, "isFlipped": false,"solved": false}],
-    // [5, {"code": "2Black", "imagePath": two_of_clubs, "isFlipped": false,"solved": false}],
-    // [6, {"code": "2Red", "imagePath": two_of_hearts, "isFlipped": false,"solved": false}],
-    // [7, {"code": "2Red", "imagePath": two_of_diamonds, "isFlipped": false,"solved": false}],
+    [4, {"code": "2Black", "imagePath": two_of_spades, "isFlipped": false,"solved": false}],
+    [5, {"code": "2Black", "imagePath": two_of_clubs, "isFlipped": false,"solved": false}],
+    [6, {"code": "2Red", "imagePath": two_of_hearts, "isFlipped": false,"solved": false}],
+    [7, {"code": "2Red", "imagePath": two_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [8, {"code": "3Black", "imagePath": three_of_spades, "isFlipped": false,"solved": false}],
-    // [9, {"code": "3Black", "imagePath": three_of_clubs, "isFlipped": false,"solved": false}],
-    // [10, {"code": "3Red", "imagePath": three_of_hearts, "isFlipped": false,"solved": false}],
-    // [11, {"code": "3Red", "imagePath": three_of_diamonds, "isFlipped": false,"solved": false}],
+    [8, {"code": "3Black", "imagePath": three_of_spades, "isFlipped": false,"solved": false}],
+    [9, {"code": "3Black", "imagePath": three_of_clubs, "isFlipped": false,"solved": false}],
+    [10, {"code": "3Red", "imagePath": three_of_hearts, "isFlipped": false,"solved": false}],
+    [11, {"code": "3Red", "imagePath": three_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [12, {"code": "4Black", "imagePath": four_of_spades, "isFlipped": false,"solved": false}],
-    // [13, {"code": "4Black", "imagePath": four_of_clubs, "isFlipped": false,"solved": false}],
-    // [14, {"code": "4Red", "imagePath": four_of_hearts, "isFlipped": false,"solved": false}],
-    // [15, {"code": "4Red", "imagePath": four_of_diamonds, "isFlipped": false,"solved": false}],
+    [12, {"code": "4Black", "imagePath": four_of_spades, "isFlipped": false,"solved": false}],
+    [13, {"code": "4Black", "imagePath": four_of_clubs, "isFlipped": false,"solved": false}],
+    [14, {"code": "4Red", "imagePath": four_of_hearts, "isFlipped": false,"solved": false}],
+    [15, {"code": "4Red", "imagePath": four_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [16, {"code": "5Black", "imagePath": five_of_spades, "isFlipped": false,"solved": false}],
-    // [17, {"code": "5Black", "imagePath": five_of_clubs, "isFlipped": false,"solved": false}],
-    // [18, {"code": "5Red", "imagePath": five_of_hearts, "isFlipped": false,"solved": false}],
-    // [19, {"code": "5Red", "imagePath": five_of_diamonds, "isFlipped": false,"solved": false}],
+    [16, {"code": "5Black", "imagePath": five_of_spades, "isFlipped": false,"solved": false}],
+    [17, {"code": "5Black", "imagePath": five_of_clubs, "isFlipped": false,"solved": false}],
+    [18, {"code": "5Red", "imagePath": five_of_hearts, "isFlipped": false,"solved": false}],
+    [19, {"code": "5Red", "imagePath": five_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [20, {"code": "6Black", "imagePath": six_of_spades, "isFlipped": false,"solved": false}],
-    // [21, {"code": "6Black", "imagePath": six_of_clubs, "isFlipped": false,"solved": false}],
-    // [22, {"code": "6Red", "imagePath": six_of_hearts, "isFlipped": false,"solved": false}],
-    // [23, {"code": "6Red", "imagePath": six_of_diamonds, "isFlipped": false,"solved": false}],
+    [20, {"code": "6Black", "imagePath": six_of_spades, "isFlipped": false,"solved": false}],
+    [21, {"code": "6Black", "imagePath": six_of_clubs, "isFlipped": false,"solved": false}],
+    [22, {"code": "6Red", "imagePath": six_of_hearts, "isFlipped": false,"solved": false}],
+    [23, {"code": "6Red", "imagePath": six_of_diamonds, "isFlipped": false,"solved": false}],
 
     // [24, {"code": "7Black", "imagePath": seven_of_spades, "isFlipped": false,"solved": false}],
     // [25, {"code": "7Black", "imagePath": seven_of_clubs, "isFlipped": false,"solved": false}],
@@ -165,7 +165,7 @@ class App extends Component{
   firstCardId = -1;
   firstCard = null;
 
-  PAIRS_TO_WIN = 2;
+  PAIRS_TO_WIN = 12;
   numPairs = 0;
 
   // To prevent clicking other cards while showing wrong match
