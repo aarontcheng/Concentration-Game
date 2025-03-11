@@ -51,9 +51,9 @@ function sleep(ms) {
 }
 
 - Now for the actual PlayingCards, will use classes and image tags. If flipped, show front of card. If not, show back
-https://codepen.io/mondal10/pen/WNNEvjV
+https://3dtransforms.desandro.com/card-flip 
 
-- State variable for amount of cards flipped. If cards flip is 52, then game ends. Checked with a gameOver function.
+- State variable for amount of pairs flipped. If cards flip is 52, then game ends. Checked with a gameOver function.
 
 - If gameOver returns true, there will be a restart modal after the games over to show final time and option to restart
 

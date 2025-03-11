@@ -46,6 +46,8 @@ class App extends Component{
   firstCardId = -1;
   firstCard = null;
 
+  PAIRS_TO_WIN = 23;
+
   constructor(props)
   {
       super(props);
@@ -72,7 +74,8 @@ class App extends Component{
   // But after getting rid of some unnecessary uses of this.state.firstCardId, started doing it on one click for some reason
   handleClick = (id, card) => {
     console.log(this.committedCards);
-    if (this.firstCardId === id){
+    // If you're selecting same or card is already matched, won't do anything
+    if (this.firstCardId === id || card.props.card["solved"] == true){
       console.log("bruh");
     }
     else if (this.firstCardId === -1){
@@ -94,6 +97,10 @@ class App extends Component{
       this.setState({numPairs: this.state.numPairs + 1});
       this.firstCardId = -1;
       this.committedCards[id]["isFlipped"] = true;
+
+      // Setting the cards' solved variable to true
+      this.firstCard.props.card["solved"] = true;
+      card.props.card["solved"] = true;
       
       console.log(this.state.numPairs);
       
