@@ -16,11 +16,6 @@ class BoardTable extends Component {
       this.props.callback(id, card);
     }
 
-    // This will be used for selected a random index from what's remaining
-    selectFromRemaining = () =>{
-
-    }
-
     // The map's entries() method turns it into iterable
     // Which allows  it to work with .map
     update = () => {

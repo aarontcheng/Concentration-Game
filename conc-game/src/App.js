@@ -19,7 +19,7 @@ class App extends Component{
   //setState does shallow equality check before actually updating, so I will need to make a new map using new Map(existingMap)
 
   // for restart(), to easily reset to initial
-  copycommittedCards = new Map([
+  copyCommittedCards = new Map([
     [0, {"code": "JackRed", "imagePath": Jack_of_hearts, "isFlipped": false, "solved": false}],
     [1, {
       "code": "JackRed", 
@@ -64,7 +64,12 @@ class App extends Component{
     }]
   ]
   );
-  randomMap = new Map([...this.committedCards.entries()].sort());
+
+  compareFn(a, b){
+    return Math.floor(Math.random() * (2 - 0) ) + 0 - 1; // return random integer for -1 to 1
+  }
+  // https://stackoverflow.com/questions/31158902/is-it-possible-to-sort-a-es6-map-object?noredirect=1&lq=1
+  randomMap = new Map([...this.committedCards.entries()].sort(this.compareFn));
   
   // This is not iterable, is actually just an object
   // committedCards = {
@@ -102,6 +107,8 @@ class App extends Component{
   PAIRS_TO_WIN = 2;
   numPairs = 0;
 
+  showingWrongMatch = false;
+
   constructor(props)
   {
       super(props);
@@ -127,10 +134,11 @@ class App extends Component{
   handleClick = async (id, card) => {
     console.log(this.committedCards);
     // If you're selecting same or card is already matched, won't do anything
-    if (this.firstCardId === id || card.props.card["solved"] == true){
+    if (this.firstCardId === id || card.props.card["solved"] == true || this.showingWrongMatch){
       console.log("bruh");
     }
     else if (this.firstCardId === -1){
+      console.log("option 2");
       var newMap = new Map(this.committedCards);
       // For some reason, even tho we already set firstCardId, we can't use it. So I'm just using id instaed, which makes more sense honestly
       this.firstCardId = id;
@@ -179,8 +187,10 @@ class App extends Component{
       // So that shallow equality doesn't mess it up, since setting state two times
       this.setState({cardsInfo: new Map(newMap)});
 
-      // For delay
+      // For delay, adn to not let player select cards while in delay
+      this.showingWrongMatch = true;
       await this.sleep(3000);
+      this.showingWrongMatch = false;
 
       // By giving parameter to get the actual first card selected as component, I can straight up manipulate it from App
       
@@ -224,9 +234,17 @@ class App extends Component{
   }
 
   restart = () =>{
-    this.setState({cardsInfo: new Map(this.copycommittedCards)});
+    // Create copy of committedCards and then alter it. Then the setState will work. Before, I just had a copyCommittedCards that I would just make a new map of and then setState with it, but the copyCommittedCards ended up changing after the first restart, so couldn't do that
+    var newMap = new Map(this.committedCards);
+    newMap.forEach((values, key) => {newMap.get(key)["solved"] = false; newMap.get(key)["isFlipped"] = false;});
+    
+    this.setState({cardsInfo: new Map(newMap)});
+    this.committedCards = new Map(newMap);
     this.numPairs = 0;
     this.turnOffRestart();
+    console.log("restarting...");
+    console.log(this.committedCards.get(0));
+    console.log(this.copyCommittedCards.get(0));
   }
 
   login = () =>{
