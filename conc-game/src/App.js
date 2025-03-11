@@ -7,6 +7,7 @@ import { Component } from 'react';
 import PlayingCard from './PlayingCard';
 import BoardTable  from './BoardTable';
 import { Col } from 'reactstrap';
+import RestartModal from './RestartModal';
 
 
 class App extends Component{
@@ -46,14 +47,14 @@ class App extends Component{
   firstCardId = -1;
   firstCard = null;
 
-  PAIRS_TO_WIN = 23;
+  PAIRS_TO_WIN = 2;
+  numPairs = 0;
 
   constructor(props)
   {
       super(props);
       this.state = {
         showRestartModal: false,
-        numPairs: 0,
         cardsInfo: this.committedCards
       };  
       // Prof rabb things v     
@@ -72,7 +73,7 @@ class App extends Component{
   // id is the key of the card
   // While working on this function, it would usually take two clicks to get the card to flip.
   // But after getting rid of some unnecessary uses of this.state.firstCardId, started doing it on one click for some reason
-  handleClick = (id, card) => {
+  handleClick = async (id, card) => {
     console.log(this.committedCards);
     // If you're selecting same or card is already matched, won't do anything
     if (this.firstCardId === id || card.props.card["solved"] == true){
@@ -94,7 +95,7 @@ class App extends Component{
     }
     else if (this.committedCards[id]["code"] === this.committedCards[this.firstCardId]["code"]){ // Matched
       console.log("Matched!!!!");
-      this.setState({numPairs: this.state.numPairs + 1});
+      this.numPairs = this.numPairs + 1;
       this.firstCardId = -1;
       this.committedCards[id]["isFlipped"] = true;
 
@@ -102,18 +103,29 @@ class App extends Component{
       this.firstCard.props.card["solved"] = true;
       card.props.card["solved"] = true;
       
-      console.log(this.state.numPairs);
+      console.log(this.numPairs);
       
       this.setState({cardsInfo: this.committedCards});
+
+
+      // This is the only option where the player can win, so is where we check if they won
+      this.checkGameOver();
     }
     else{ // Not a match, reset firstCardId. 
       console.log("Not Matched!!!!");
       // flip both cards back
-      // this.state.cardsInfo[id]["isFlipped"] = false;
+      this.committedCards[id]["isFlipped"] = true;
+      card.flip();
+
+      // For delay
+      await this.sleep(3000);
 
       // By giving parameter to get the actual first card selected as component, I can straight up manipulate it from App
+      
+      this.committedCards[id]["isFlipped"] = false;
       this.firstCard.props.card["isFlipped"] = false;
       this.firstCard.flip();
+      card.flip();
 
       console.log(this.committedCards[this.firstCardId]["code"] + ": " + this.committedCards[this.firstCardId]["isFlipped"]);
 
@@ -125,19 +137,40 @@ class App extends Component{
       this.setState({cardsInfo: this.committedCards});
 
     }
+
+  }
+
+  // Function to delay flipping of cards
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 
+  // Below functions deal with restarting the game with the Restart Modal
+
   // Function to check if number of pairs is = to constant variable of number of pairs needed to win
   checkGameOver = () => {
+    if (this.numPairs === this.PAIRS_TO_WIN){
+      // For each card, go through the list and set each one back to default values
+      this.setState({showRestartModal: true});
+      console.log("Yay");
+    }
+  }
+
+  turnOffRestart = () =>{
+    this.setState({showRestartModal: false});
+  }
+
+  restart = () =>{
 
   }
 
   render() {
   return (
     <div className="App">
-      {this.state.numPairs}
-      <BoardTable cards={this.state.cardsInfo} callback={this.handleClick} updateKey={this.state.numPairs}></BoardTable>
+      {this.numPairs}
+      <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
+      <RestartModal callback={this.restart} cancel= {this.turnOffRestart} showModal={this.state.showRestartModal}></RestartModal>
     </div>
   )
 }

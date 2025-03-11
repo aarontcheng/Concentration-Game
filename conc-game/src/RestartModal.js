@@ -18,7 +18,7 @@ class RestartModal extends Component{
     // callback function will make POST request to Login path with username and password in body. Then 
     // App.js will get a token to save to its state, which it will use for getting just the user's fastest time for npw
     login = () =>{
-        this.props.callback(this.state.username, this.state.password);
+        this.props.callback();
     }
 
     // The e is what gets what's inside the element
@@ -45,7 +45,7 @@ class RestartModal extends Component{
             </ModalBody>
             <ModalFooter>
                 <Button color="secondary" onClick={this.toggle}>Restart</Button>
-                <Button color="primary" onClick={this.addNewClub}>Login</Button>
+                <Button color="primary" onClick={this.login}>Login</Button>
             </ModalFooter>
 
         </Modal>

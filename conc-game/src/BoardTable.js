@@ -16,7 +16,7 @@ class BoardTable extends Component {
       this.props.callback(id, card);
     }
 
-    things = Object.entries(this.props.cards).map(([key, value]) =>
+    playingCards = Object.entries(this.props.cards).map(([key, value]) =>
         <Col>
           <PlayingCard id={key} card={value} callback={this.handleClick}></PlayingCard>
         </Col>
@@ -26,10 +26,9 @@ class BoardTable extends Component {
     render() {
       return <div className="BoardTable">
         yoooo
-        {this.props.updateKey}
        <Container>
-        <Row xs="1" sm="1" md="2" lg="4">
-          {this.things}
+        <Row xs="4" sm="4" md="8" lg="16">
+          {this.playingCards}
         </Row>
       </Container>
 
