@@ -1,4 +1,5 @@
 import { Component } from "react";
+import card_back from "./images/back-of-card-pixilart.png"
 import './App.css';
 
 // Constructor's props will have object that has values for front and back image path, whether or not flipped, card number and color. The suite is not really necessary in concentration
@@ -46,7 +47,7 @@ class PlayingCard extends Component {
       return <div className="card" onClick={this.handleClick}>
         <div className={this.flip()}>
             <div className="card-back">
-                <p>Back</p>
+                <img style={{size: "auto"}} src={card_back} alt="Back"></img>
             </div>
             <div className="card-front">
                 <img src={this.props.card["imagePath"]} alt={this.props.card["code"]}></img>

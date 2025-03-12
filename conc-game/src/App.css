@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: navy;
+  color: white;
 }
 
 
@@ -53,4 +55,19 @@ img{
   background-color: #bbb;
   color: black;
   transform: rotateY(180deg);
+}
+
+/* For timer */
+.inactive{
+  background-color: lightcoral;
+  
+}
+
+.active{
+  background-color: green;
+}
+
+.active, .inactive {
+  width:10%;
+  border-radius: 5px;
 }

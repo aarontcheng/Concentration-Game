@@ -49,20 +49,20 @@ import ten_of_diamonds from './images/10_of_diamonds.png';
 import ten_of_clubs from './images/10_of_clubs.png';
 import ten_of_spades from './images/10_of_spades.png';
 
-import jack_of_hearts from './images/jack_of_hearts.png';
-import jack_of_diamonds from './images/jack_of_diamonds.png';
+import jack_of_hearts from './images/jack_of_hearts2.png';
+import jack_of_diamonds from './images/jack_of_diamonds2.png';
 import jack_of_clubs from './images/jack_of_clubs.png';
 import jack_of_spades from './images/jack_of_spades.png';
 
-import queen_of_hearts from './images/queen_of_hearts.png';
-import queen_of_diamonds from './images/queen_of_diamonds.png';
-import queen_of_clubs from './images/queen_of_clubs.png';
-import queen_of_spades from './images/queen_of_spades.png';
+import queen_of_hearts from './images/queen_of_hearts2.png';
+import queen_of_diamonds from './images/queen_of_diamonds2.png';
+import queen_of_clubs from './images/queen_of_clubs2.png';
+import queen_of_spades from './images/queen_of_spades2.png';
 
-import king_of_hearts from './images/king_of_hearts.png';
-import king_of_diamonds from './images/king_of_diamonds.png';
-import king_of_clubs from './images/king_of_clubs.png';
-import king_of_spades from './images/king_of_spades.png';
+import king_of_hearts from './images/king_of_hearts2.png';
+import king_of_diamonds from './images/king_of_diamonds2.png';
+import king_of_clubs from './images/king_of_clubs2.png';
+import king_of_spades from './images/king_of_spades2.png';
 
 import './App.css';
 import { Component } from 'react';
@@ -86,20 +86,20 @@ class App extends Component{
     [2, {"code": "AceRed", "imagePath": ace_of_clubs, "isFlipped": false, "solved": false}],
     [3, {"code": "AceRed", "imagePath": ace_of_spades, "isFlipped": false,"solved": false}],
 
-    // [4, {"code": "2Black", "imagePath": two_of_spades, "isFlipped": false,"solved": false}],
-    // [5, {"code": "2Black", "imagePath": two_of_clubs, "isFlipped": false,"solved": false}],
-    // [6, {"code": "2Red", "imagePath": two_of_hearts, "isFlipped": false,"solved": false}],
-    // [7, {"code": "2Red", "imagePath": two_of_diamonds, "isFlipped": false,"solved": false}],
+    [4, {"code": "2Black", "imagePath": two_of_spades, "isFlipped": false,"solved": false}],
+    [5, {"code": "2Black", "imagePath": two_of_clubs, "isFlipped": false,"solved": false}],
+    [6, {"code": "2Red", "imagePath": two_of_hearts, "isFlipped": false,"solved": false}],
+    [7, {"code": "2Red", "imagePath": two_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [8, {"code": "3Black", "imagePath": three_of_spades, "isFlipped": false,"solved": false}],
-    // [9, {"code": "3Black", "imagePath": three_of_clubs, "isFlipped": false,"solved": false}],
-    // [10, {"code": "3Red", "imagePath": three_of_hearts, "isFlipped": false,"solved": false}],
-    // [11, {"code": "3Red", "imagePath": three_of_diamonds, "isFlipped": false,"solved": false}],
+    [8, {"code": "3Black", "imagePath": three_of_spades, "isFlipped": false,"solved": false}],
+    [9, {"code": "3Black", "imagePath": three_of_clubs, "isFlipped": false,"solved": false}],
+    [10, {"code": "3Red", "imagePath": three_of_hearts, "isFlipped": false,"solved": false}],
+    [11, {"code": "3Red", "imagePath": three_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [12, {"code": "4Black", "imagePath": four_of_spades, "isFlipped": false,"solved": false}],
-    // [13, {"code": "4Black", "imagePath": four_of_clubs, "isFlipped": false,"solved": false}],
-    // [14, {"code": "4Red", "imagePath": four_of_hearts, "isFlipped": false,"solved": false}],
-    // [15, {"code": "4Red", "imagePath": four_of_diamonds, "isFlipped": false,"solved": false}],
+    [12, {"code": "4Black", "imagePath": four_of_spades, "isFlipped": false,"solved": false}],
+    [13, {"code": "4Black", "imagePath": four_of_clubs, "isFlipped": false,"solved": false}],
+    [14, {"code": "4Red", "imagePath": four_of_hearts, "isFlipped": false,"solved": false}],
+    [15, {"code": "4Red", "imagePath": four_of_diamonds, "isFlipped": false,"solved": false}],
 
     // [16, {"code": "5Black", "imagePath": five_of_spades, "isFlipped": false,"solved": false}],
     // [17, {"code": "5Black", "imagePath": five_of_clubs, "isFlipped": false,"solved": false}],
@@ -165,7 +165,7 @@ class App extends Component{
   firstCardId = -1;
   firstCard = null;
 
-  PAIRS_TO_WIN = 2;
+  PAIRS_TO_WIN = 8;
   numPairs = 0;
 
   // To prevent clicking other cards while showing wrong match
@@ -339,11 +339,11 @@ class App extends Component{
   render() {
   return (
     <div className="App">
+      <h1>Concentration Game</h1>
       Number of matches: {this.numPairs}
       <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
       <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
       <RestartModal initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>
-      <Button onClick={this.restart}>Restart</Button>
     </div>
   )
 }

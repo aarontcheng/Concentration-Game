@@ -104,9 +104,18 @@ class Stopwatch extends Component{
         this.props.callback(this);
     }
 
+    redOrGreenLight = () =>{
+        if (this.props.gameOver === true){
+            return "inactive";
+        }
+        else{
+            return "active";
+        }
+    }
+
     render() {
         return (
-            <div style={{ textAlign: "center", margin: "auto" }}>
+            <div className={this.redOrGreenLight()} style={{ textAlign: "center", margin: "auto" }}>
                 <h3>Timer</h3>
                 <h2>{this.state.timer}</h2>
                 <button onClick={this.restart}>Restart</button>
