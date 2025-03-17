@@ -31,8 +31,8 @@ class RestartModal extends Component{
     }
 
     getTime = () =>{
-        console.log("finalTime: " + this.props.finalTime);
-        console.log("initialTime: " + this.props.initialTime);
+        // console.log("finalTime: " + this.props.finalTime);
+        // console.log("initialTime: " + this.props.initialTime);
         return (this.props.finalTime - this.props.initialTime)/1000;
     }
 

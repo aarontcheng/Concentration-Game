@@ -101,13 +101,13 @@ class App extends Component{
     [14, {"code": "4Red", "imagePath": four_of_hearts, "isFlipped": false,"solved": false}],
     [15, {"code": "4Red", "imagePath": four_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [16, {"code": "5Black", "imagePath": five_of_spades, "isFlipped": false,"solved": false}],
-    // [17, {"code": "5Black", "imagePath": five_of_clubs, "isFlipped": false,"solved": false}],
-    // [18, {"code": "5Red", "imagePath": five_of_hearts, "isFlipped": false,"solved": false}],
-    // [19, {"code": "5Red", "imagePath": five_of_diamonds, "isFlipped": false,"solved": false}],
+    [16, {"code": "5Black", "imagePath": five_of_spades, "isFlipped": false,"solved": false}],
+    [17, {"code": "5Black", "imagePath": five_of_clubs, "isFlipped": false,"solved": false}],
+    [18, {"code": "5Red", "imagePath": five_of_hearts, "isFlipped": false,"solved": false}],
+    [19, {"code": "5Red", "imagePath": five_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [20, {"code": "6Black", "imagePath": six_of_spades, "isFlipped": false,"solved": false}],
-    // [21, {"code": "6Black", "imagePath": six_of_clubs, "isFlipped": false,"solved": false}],
+    [20, {"code": "6Black", "imagePath": six_of_spades, "isFlipped": false,"solved": false}],
+    [21, {"code": "6Black", "imagePath": six_of_clubs, "isFlipped": false,"solved": false}],
     // [22, {"code": "6Red", "imagePath": six_of_hearts, "isFlipped": false,"solved": false}],
     // [23, {"code": "6Red", "imagePath": six_of_diamonds, "isFlipped": false,"solved": false}],
 
@@ -165,7 +165,7 @@ class App extends Component{
   firstCardId = -1;
   firstCard = null;
 
-  PAIRS_TO_WIN = 8;
+  PAIRS_TO_WIN = 11;
   numPairs = 0;
 
   // To prevent clicking other cards while showing wrong match
@@ -175,12 +175,14 @@ class App extends Component{
   {
       super(props);
       this.state = {
-        showRestartModal: false,
+        // Show login page at start up
+        showRestartModal: true,
         cardsInfo: this.committedCards,
         initialTime: Date.now(),
         finalTime: Date.now(),
         gameOver: false,
-        stopwatch: null
+        stopwatch: null,
+        leaderboard: ""
       };  
       // this.committedCards.forEach((values, key) => {console.log(values, key)})
   }
@@ -332,15 +334,90 @@ class App extends Component{
     
   }
 
+  // *******************************************************
+  // APIIIIIIIII STUUUUUUFFFFFFFFFFFf
+  // *******************************************************
+
+  getLeaderboard = () => {
+    //Call "http://localhost:5000" directly 
+    // now that CORS is set up in Flask
+    // Seems like url was using losalhost, so that was causing cors issue
+    fetch('http://127.0.0.1:5000/leaderboard')
+      .then(
+         (response) => 
+         {
+          // console.log(response)
+            if (response.status === 200)
+            {
+              return (response.json());
+            }
+            else
+            {
+              console.log("HTTP error:" + response.status + ":" +  response.statusText);
+              return ([ ["status ", response.status]]);
+            }
+         }
+      )//The promise response is returned, then we extract the json data
+      .then ((jsonOutput) => //jsonOutput now has result of the data extraction
+        {
+          // console.log("it should be displaying now");
+          this.updateLeaderboard(jsonOutput);
+        }
+      )
+      .catch((error) => 
+        {console.log(error);
+          this.updateLeaderboard("");
+        } 
+      )
+
+  }
+
   login = () =>{
 
   }
+
+  // The leaderboard is going to be a single string for now, can make each position be an object if I want to
+  updateLeaderboard = (apiResponse) => {
+    // console.log(apiResponse, "This is the response");
+    console.log(apiResponse[0], "This is the object");
+
+    // Initial string
+    var display = "";
+
+    // For some reason, using for loop wouldn't work (when I would console.log the user, it would return a number instead)
+    for (let i = 0; i < apiResponse.length; i++){
+      let user = apiResponse[i];
+      console.log(user);
+      display += user["name"] + ": " + user["fastest_time"] + " seconds\n"
+    }
+
+    console.log(display)
+    this.setState({leaderboard: display})
+  }
+
+  componentDidMount(){
+    console.log(this.getLeaderboard());
+    // console.log(this.state.leaderboard)
+  }
+
+  // *******************************************************
+  // ENDDDDDD OFFFFFFFF APIIIIIIIII STUUUUUUFFFFFFFFFFFf
+  // *******************************************************
+
 
   render() {
   return (
     <div className="App">
       <h1>Concentration Game</h1>
       Number of matches: {this.numPairs}
+      <br></br>
+      
+      <div style={{whiteSpace: "pre-wrap"}}>
+        <h2>Leaderboard</h2>
+        {this.state.leaderboard}
+      </div>
+      
+
       <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
       <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
       <RestartModal initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>

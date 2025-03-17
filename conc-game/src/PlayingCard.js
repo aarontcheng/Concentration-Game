@@ -13,7 +13,7 @@ class PlayingCard extends Component {
             this.nameOfClass = "card-inner is-flipped";
         }
         else{
-            console.log(this.props.card["code"] + " should be flipping to back now...");
+            // console.log(this.props.card["code"] + " should be flipping to back now...");
             this.nameOfClass= "card-inner";
         }
     }
