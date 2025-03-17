@@ -19,9 +19,8 @@ class Login(Resource):
     
 
 class User(Resource):
-    def get(self):
+    def get(self, name):
         # Url params
-        name = request.args.get('name')
         return users_business.getFastestTime(name)
     
     

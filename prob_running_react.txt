@@ -1,0 +1,8 @@
+Run this if it says
+
+    > conc-game@0.1.0 start
+    > react-scripts start
+
+    sh: react-scripts: command not found
+
+npm install ajv@latest ajv-keywords@latest
