@@ -172,7 +172,8 @@ def timeSort(user):
 # print(getLeaderBoard())
 
 # Johnny's password is password
-key = login("Johnny", "password")
-setFastestTime("Johnny", 31, key)
+newKey = login("AaronCheng", "Aaron")
+key = login("JohnnyDeee", "password")
+setFastestTime("JohnnyDeee", 41, key)
 
 print(getLeaderBoard())

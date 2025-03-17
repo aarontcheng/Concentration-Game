@@ -2,7 +2,6 @@ from flask_restful import Resource
 
 from flask_restful import request
 from flask_restful import reqparse
-import json
 
 from . import users_business
 
@@ -21,11 +20,27 @@ class Login(Resource):
 
 class User(Resource):
     def get(self):
-        return "fastest time"
+        # Url params
+        name = request.args.get('name')
+        return users_business.getFastestTime(name)
     
+    
+class UserSet(Resource):
     def put(self):
-        return "set fastest time"
+        # Info is put in body
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type = str)
+        # Type is int, don't worry since we're not doing database stuff
+        parser.add_argument('time', type = int)
+        parser.add_argument('sessionKey', type = str)
+        args = parser.parse_args()
+
+        name = args['name']
+        time = args['time']
+        sessionKey = args['sessionKey']
+        return users_business.setFastestTime(name, time, sessionKey)
+
     
 class Leaderboard(Resource):
     def get(self):
-        return "top 10"
+        return users_business.getLeaderBoard()
