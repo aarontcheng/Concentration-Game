@@ -1,0 +1,14 @@
+[
+      {
+            "name": "Johnny",
+            "hashed_password": "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86",
+            "session_key": "wIr4sEk5RzqBY_wUeD2c4Q",
+            "fastest_time": 31
+      },
+      {
+            "name": "JohnnyDeee",
+            "hashed_password": "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86",
+            "session_key": "x9O_F6oj0bhbV2awiAs5rg",
+            "fastest_time": -1
+      }
+]
