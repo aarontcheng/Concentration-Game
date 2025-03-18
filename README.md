@@ -1,25 +1,33 @@
 # Concentration Game
 
-## MVP Requirements:
-1. Single player mode: 52 cards face up for 7 seconds. Then flip back and stopwatch starts.
+## How to Run
+1. run "python3 server/server.py" to start flask server
+2. cd into conc-game directory, the react app
+3. run "npm start" for local running
+4. if it says, "sh: react-scripts: command not found", then run "npm install ajv@latest ajv-keywords@latest" and repeat step 3
+
+## Requirements:
+1. Single player:
 - Player first selects a card that flips over, then second card also flips and will be matched
     - If wrong, both cards will flip back after 3 seconds
     - If right, both cards will stay flipped face up
 
 2. Stopwatch stops when all cards have been flipped over
 - A player's fastest time is stored and shown on screen at all times
+- Leaderboard of top 5 players shown
 
-3. Button to restart or logout of account
+3. Button to restart or login with another account.
 
 4. Players will log in with their username and password
+
+5. If you don't login, you can still play but time won't be stored
 
 ## Plan for implementation
 
 ### Front End
-- Don't store data in database yet, but in a list, 
-- Using component not function hook
+- Using class component not function hook
 - Create component for a generic card
-- Use map to create 52 cards
+- Use map function to create cards
 - Create component for the display of the cards
 - Create component for timer
 - Create component to display the user name and fastest time

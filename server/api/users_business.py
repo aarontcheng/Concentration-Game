@@ -152,12 +152,17 @@ def getLeaderBoard():
         data = json.load(file)
         data.sort(key=timeSort)
 
+    # So that we don't return personal data by accident
+    for i in data:
+        i["hashed_password"] = "1"
+        i["session_key"] = "1"
+    
     # If length is less than 5, just return data
     if (len(data) < 5):
         return data
     
-    # return top 5
-    return [x for x in data for _ in range(5)]
+    # return top 5 with slicing
+    return data[0:5]
 
 # For use to sort data
 def timeSort(user):

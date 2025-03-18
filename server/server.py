@@ -6,6 +6,7 @@ from api.users import *
 
 app = Flask(__name__) #create Flask instance
 CORS(app) #Enable CORS on Flask server to work with Nodejs pages
+
 api = Api(app) #api router
 
 # api.add_resource(Club,'/club')
@@ -16,7 +17,7 @@ api = Api(app) #api router
 # info in body
 api.add_resource(UserSet,'/user')
 
-# Url params
+# Url params for getting fastest time
 api.add_resource(User,'/user/<string:name>')
 
 api.add_resource(Login,'/user/login')

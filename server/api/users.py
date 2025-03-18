@@ -16,7 +16,6 @@ class Login(Resource):
         password = args['password']
 
         return users_business.login(name, password)
-    
 
 class User(Resource):
     def get(self, name):
