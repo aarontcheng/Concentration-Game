@@ -6,6 +6,16 @@
 3. run "npm start" for local running
 4. if it says, "sh: react-scripts: command not found", then run "npm install ajv@latest ajv-keywords@latest" and repeat step 3
 
+## How to play
+Login shows up first. 
+Entering new name and any password and then pressing login will create a new account
+Entering old name and right password and then pressing login will set the current user to that name
+If you don't enter in right name or just skip it and press Start, your time won't be save
+
+Note: The github page will only show leaderboard and fastest time if you run the flask server using:
+  python server/server.py
+while on the page
+
 ## Requirements:
 1. Single player:
 - Player first selects a card that flips over, then second card also flips and will be matched
