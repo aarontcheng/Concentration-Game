@@ -1,76 +1,70 @@
-# Concentration Game
+# Getting Started with Create React App
 
-## How to Run
-1. run "python3 server/server.py" to start flask server
-2. cd into conc-game directory, the react app
-3. run "npm start" for local running
-4. if it says, "sh: react-scripts: command not found", then run "npm install ajv@latest ajv-keywords@latest" and repeat step 3
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Requirements:
-1. Single player:
-- Player first selects a card that flips over, then second card also flips and will be matched
-    - If wrong, both cards will flip back after 3 seconds
-    - If right, both cards will stay flipped face up
+## Available Scripts
 
-2. Stopwatch stops when all cards have been flipped over
-- A player's fastest time is stored and shown on screen at all times
-- Leaderboard of top 5 players shown
+In the project directory, you can run:
 
-3. Button to restart or login with another account.
+### `npm start`
 
-4. Players will log in with their username and password
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-5. If you don't login, you can still play but time won't be stored
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Plan for implementation
+### `npm test`
 
-### Front End
-- Using class component not function hook
-- Create component for a generic card
-- Use map function to create cards
-- Create component for the display of the cards
-- Create component for timer
-- Create component to display the user name and fastest time
-- Modals for restart and logout
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-#### Actual Implementation Plan
-- Work on the actual game first
-- Store all the data on the cards in the front end, like color, number, and image file link, in a card list, say list A
-- Then in the state variable in the constructor of the App.js, use an update method that takes the card list and  uses a map to turn into a list of cards that should look like:
-this.playingCards = Object.entries(this.list_A).map(([key, value]) =>
-      <Col>
-        <PlayingCard card = {value}><PlayingCard>
-      </Col>
-    );
-- Then in the render function, it will return:
-<Container>
-        <Row xs="1" sm="1" md="2" lg="4">
-          {this.playingCards}
-        </Row>
-</Container>
+### `npm run build`
 
-- We then need a variable for the first and second selected card, set by the (selectCard = (selectedCard)) function
-- the selectCard function will be the onClick function for the playing cards
-- it will check if the firstCard selected is null, and set it if it is null, and if it isn't, check that the firstCard isn't being clicked again, and then use a checkMatch function to see if they match
-- will need to sleep for a bit to not let player choose more cards:
-https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-- Now for the actual PlayingCards, will use classes and image tags. If flipped, show front of card. If not, show back
-https://3dtransforms.desandro.com/card-flip 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-- State variable for amount of pairs flipped. If cards flip is 52, then game ends. Checked with a gameOver function.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- If gameOver returns true, there will be a restart modal after the games over to show final time and option to restart
+### `npm run eject`
 
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### Back End
-- Put user credentials in body of request, so use PUT to enter username and password attempt to back end compare to hash, and then create a new token and send back if matches
-- Flask server to connect
-- for now, use json or csv file
-- later use database.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
