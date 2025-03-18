@@ -551,6 +551,8 @@ class App extends Component{
           {this.state.leaderboard}
         </div>
         <div style={{background: "purple", minWidth: "fit-content", whiteSpace: "pre-wrap"}}>
+          {this.state.currentUserName}:
+          <br/>
           {this.state.currentUserFastest}
         </div>
         <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
@@ -560,7 +562,7 @@ class App extends Component{
 
      
       <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
-      <RestartModal initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>
+      <RestartModal currentName={this.state.currentUserName} initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>
     </div>
   )
 }
