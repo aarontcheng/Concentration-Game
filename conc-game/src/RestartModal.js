@@ -18,7 +18,15 @@ class RestartModal extends Component{
     // callback function will make POST request to Login path with username and password in body. Then 
     // App.js will get a token to save to its state, which it will use for getting just the user's fastest time for npw
     login = () =>{
-        this.props.login();
+        let result = this.props.login(this.state.username, this.state.password);
+
+        // Reset username and password after logging in if successful
+
+        // Nada is what login returns if login failed
+        if (result === "Nada"){
+            console.log("login failed");
+        }
+        this.setState({name: "", password: ""});
     }
 
     // The e is what gets what's inside the element
@@ -27,18 +35,19 @@ class RestartModal extends Component{
     }
 
     updatePassword = (e) =>{
-        this.setState({username: e.target.value});
+        this.setState({password: e.target.value});
     }
 
     getTime = () =>{
         // console.log("finalTime: " + this.props.finalTime);
         // console.log("initialTime: " + this.props.initialTime);
-        return (this.props.finalTime - this.props.initialTime)/1000;
+        return Math.floor((this.props.finalTime - this.props.initialTime)/1000);
     }
 
+    // https://stackoverflow.com/questions/45201351/masking-password-input-in-reactjs
     render(){
         return <Modal isOpen={this.props.showModal} toggle={this.props.restart}>
-            <ModalHeader>You Win!!! Time: {this.getTime()} seconds</ModalHeader>
+            <ModalHeader>Concentration Game, login to save your time<br/>Time: {this.getTime()} seconds</ModalHeader>
             <ModalBody>
                 <InputGroup>
                     <InputGroupText>Username</InputGroupText>
@@ -46,11 +55,11 @@ class RestartModal extends Component{
                 </InputGroup>
                 <InputGroup>
                     <InputGroupText>Password</InputGroupText>
-                    <Input placeholder="password" onChange={this.updatePassword} defaultValue=""></Input>
+                    <Input type="password" placeholder="Password" onChange={this.updatePassword} defaultValue=""></Input>
                 </InputGroup>
             </ModalBody>
             <ModalFooter>
-                <Button color="secondary" onClick={this.restart}>Restart</Button>
+                <Button color="secondary" onClick={this.restart}>Start</Button>
                 <Button color="primary" onClick={this.login}>Login</Button>
             </ModalFooter>
 

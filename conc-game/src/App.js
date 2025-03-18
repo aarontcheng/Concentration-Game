@@ -171,6 +171,9 @@ class App extends Component{
   // To prevent clicking other cards while showing wrong match
   showingWrongMatch = false;
 
+  // The state version of this is there for when I put it into a component, but this one is used cause its faster
+  currentName = ""
+
   constructor(props)
   {
       super(props);
@@ -182,7 +185,10 @@ class App extends Component{
         finalTime: Date.now(),
         gameOver: false,
         stopwatch: null,
-        leaderboard: ""
+        leaderboard: "",
+        currentUserName: "",
+        currentUserKey: "",
+        currentUserFastest: ""
       };  
       // this.committedCards.forEach((values, key) => {console.log(values, key)})
   }
@@ -293,6 +299,8 @@ class App extends Component{
       this.setState({showRestartModal: true, finalTime: Date.now(), gameOver: true});
       // console.log("game over");
 
+      this.setFastestTime(this.state.currentUserName, this.state.currentUserKey, Math.floor((Date.now() - this.state.initialTime) / 1000));
+
     }
   }
 
@@ -338,6 +346,47 @@ class App extends Component{
   // APIIIIIIIII STUUUUUUFFFFFFFFFFFf
   // *******************************************************
 
+  getTime = () => {
+    //Call "http://localhost:5000" directly 
+    // now that CORS is set up in Flask
+    // Seems like url was using losalhost, so that was causing cors issue
+
+    // Just realized that if anyone named themselves login, that would cause major issues. probably why query string is usually better
+    // Will circumvent by creating a login user with a password even I'll forget
+    console.log(this.currentName, "name");
+    let url = 'http://127.0.0.1:5000/user/' + this.currentName;
+    console.log(url);
+    fetch(url)
+      .then(
+         (response) => 
+         {
+          console.log("Brooooooo");
+          console.log(response);
+            if (response.status === 200)
+            {
+              return (response.json());
+            }
+            else
+            {
+              console.log("HTTP error:" + response.status + ":" +  response.statusText);
+              return ("N/A");
+            }
+         }
+      )//The promise response is returned
+      .then ((output) => 
+        {
+          // console.log("it should be displaying now");
+          this.updateTime(output);
+        }
+      )
+      .catch((error) => 
+        {
+          console.log(error);
+        } 
+      )
+
+  }
+
   getLeaderboard = () => {
     //Call "http://localhost:5000" directly 
     // now that CORS is set up in Flask
@@ -372,10 +421,6 @@ class App extends Component{
 
   }
 
-  login = () =>{
-
-  }
-
   // The leaderboard is going to be a single string for now, can make each position be an object if I want to
   updateLeaderboard = (apiResponse) => {
     // console.log(apiResponse, "This is the response");
@@ -384,19 +429,108 @@ class App extends Component{
     // Initial string
     var display = "";
 
+    console.log(apiResponse.length, "length");
     // For some reason, using for loop wouldn't work (when I would console.log the user, it would return a number instead)
     for (let i = 0; i < apiResponse.length; i++){
       let user = apiResponse[i];
       console.log(user);
-      display += user["name"] + ": " + user["fastest_time"] + " seconds\n"
+      if (user["fastest_time"] === -1){
+        display += user["name"] + ": " + "N/A\n"
+      }
+      else{
+        display += user["name"] + ": " + user["fastest_time"] + " seconds\n"
+      }
+      
     }
 
     console.log(display)
     this.setState({leaderboard: display})
   }
 
+  updateTime = (apiResponse) => {
+    // console.log(apiResponse, "This is the response");
+    console.log(apiResponse, "This is the object");
+
+    // Initial string
+    var display = "Fastest Time: \n" + apiResponse + " seconds";
+
+    // For some reason, using for loop wouldn't work (when I would console.log the user, it would return a number instead)
+
+    console.log(display)
+    this.setState({currentUserFastest: display})
+  }
+
+  login = (_name, _password) =>{
+    let url = 'http://127.0.0.1:5000/user/login';
+
+    let jData = JSON.stringify({
+      name: _name,
+      password: _password
+    });
+
+    fetch(url,
+      {
+        method: 'POST',
+        body: jData,
+        headers: {"Content-type": "application/json; charset = UTF-8"}
+      }
+    ).then(
+      (response) => {
+        if (response.status === 200){
+          return (response.json());
+        }
+        else{
+          return([["status ", response.status]]);
+        }
+      }
+    ).then((jsonOutput) => {
+      // The jsonOutput might need a name change since this should just return the session key, not a json value
+      this.setState({currentUserName: _name, currentUserKey: jsonOutput});
+      this.currentName = _name;
+      console.log(this.currentName);
+      console.log(jsonOutput, "key");
+
+      this.getTime();
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
+  setFastestTime = (_name, _sessionKey, _time) =>{
+    let url = 'http://127.0.0.1:5000/user';
+
+    let jData = JSON.stringify({
+      name: _name,
+      sessionKey: _sessionKey,
+      time: _time
+    });
+
+    fetch(url,
+      {
+        method: 'PUT',
+        body: jData,
+        headers: {"Content-type": "application/json; charset = UTF-8"}
+      }
+    ).then(
+      (response) => {
+        if (response.status === 200){
+          return (response.json());
+        }
+        else{
+          return([["status ", response.status]]);
+        }
+      }
+    ).then((jsonOutput) => {
+      // The jsonOutput might need a name change since this should just return the session key, not a json value
+      this.getLeaderboard();
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
   componentDidMount(){
     console.log(this.getLeaderboard());
+    console.log(this.getTime())
     // console.log(this.state.leaderboard)
   }
 
@@ -404,21 +538,27 @@ class App extends Component{
   // ENDDDDDD OFFFFFFFF APIIIIIIIII STUUUUUUFFFFFFFFFFFf
   // *******************************************************
 
-
+  // The pre-wrap is there for \n to not be disregarded since it's whitespace
   render() {
   return (
     <div className="App">
       <h1>Concentration Game</h1>
-      Number of matches: {this.numPairs}
       <br></br>
       
-      <div style={{whiteSpace: "pre-wrap"}}>
-        <h2>Leaderboard</h2>
-        {this.state.leaderboard}
+      <div className="flex-container">
+        <div style={{whiteSpace: "pre-wrap", backgroundColor: "darkGreen", minWidth: "fit-content", maxWidth: "25%"}}>
+          <h3>Leaderboard</h3>
+          {this.state.leaderboard}
+        </div>
+        <div style={{background: "purple", minWidth: "fit-content", whiteSpace: "pre-wrap"}}>
+          {this.state.currentUserFastest}
+        </div>
+        <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
       </div>
+    
       
 
-      <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
+     
       <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
       <RestartModal initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>
     </div>

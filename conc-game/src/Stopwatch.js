@@ -115,7 +115,7 @@ class Stopwatch extends Component{
 
     render() {
         return (
-            <div className={this.redOrGreenLight()} style={{ textAlign: "center", margin: "auto" }}>
+            <div className={this.redOrGreenLight()} style={{minWidth: "fit-content", width:"200px"}}>
                 <h3>Timer</h3>
                 <h2>{this.state.timer}</h2>
                 <button onClick={this.restart}>Restart</button>
