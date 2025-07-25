@@ -204,7 +204,6 @@ class App extends Component{
   // While working on this function, it would usually take two clicks to get the card to flip.
   // But after getting rid of some unnecessary uses of this.state.firstCardId, started doing it on one click for some reason
   handleClick = async (id, card) => {
-    // console.log(this.committedCards);
     // If you're selecting same or card is already matched, won't do anything
     if (this.firstCardId === id || card.props.card["solved"] === true || this.showingWrongMatch || this.state.gameOver === true){
       console.log("bruh");
@@ -324,14 +323,13 @@ class App extends Component{
     this.numPairs = 0;
     this.turnOffRestart();
     this.firstCardId = -1;
-    // console.log("restarting...");
     await this.sleep(1000);
     
     var secondNewMap = new Map(this.committedCards);
     secondNewMap = this.shuffle(secondNewMap);
     
 
-    // TO prevent pplayer from seeing the new order of cards when they flip back
+    // To prevent player from seeing the new order of cards when they flip back
     
 
     this.setState({cardsInfo: secondNewMap, initialTime: Date.now(), finalTime: Date.now(), gameOver: false})
@@ -409,7 +407,6 @@ class App extends Component{
       )//The promise response is returned, then we extract the json data
       .then ((jsonOutput) => //jsonOutput now has result of the data extraction
         {
-          // console.log("it should be displaying now");
           this.updateLeaderboard(jsonOutput);
         }
       )
