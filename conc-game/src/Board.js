@@ -4,7 +4,7 @@ import {Row, Col, Container} from 'reactstrap';
 import PlayingCard from './PlayingCard';
 
 
-class BoardTable extends Component {
+class Board extends Component {
   // Bringing it to main app, which has the list of card info
     handleClick = (id, card) => {
       this.props.callback(id, card);
@@ -35,4 +35,4 @@ class BoardTable extends Component {
 
 }
 
-export default BoardTable;
+export default Board;

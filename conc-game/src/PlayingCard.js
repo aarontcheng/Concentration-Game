@@ -47,7 +47,7 @@ class PlayingCard extends Component {
       return <div className="card" onClick={this.handleClick}>
         <div className={this.flip()}>
             <div className="card-back">
-                <img style={{size: "auto"}} src={card_back} alt="Back"></img>
+                <img style={{size: "auto",}} src={card_back} alt="Back"></img>
             </div>
             <div className="card-front">
                 <img src={this.props.card["imagePath"]} alt={this.props.card["code"]}></img>

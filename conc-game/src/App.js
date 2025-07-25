@@ -66,7 +66,7 @@ import king_of_spades from './images/king_of_spades2.png';
 
 import './App.css';
 import { Component } from 'react';
-import BoardTable  from './BoardTable';
+import BoardTable  from './Board';
 import RestartModal from './RestartModal';
 import { Button, Card, CardTitle, CardBody, Col, Row, CardGroup} from 'reactstrap';
 import Stopwatch from './Stopwatch';
@@ -81,28 +81,28 @@ class App extends Component{
   //setState does shallow equality check before actually updating, so I will need to make a new map using new Map(existingMap)
 
   committedCards = new Map([
-    [0, {"code": "AceBlack", "imagePath": ace_of_hearts, "isFlipped": false, "solved": false}],
-    [1, {"code": "AceBlack", "imagePath": ace_of_diamonds, "isFlipped": false, "solved": false}],
-    [2, {"code": "AceRed", "imagePath": ace_of_clubs, "isFlipped": false, "solved": false}],
-    [3, {"code": "AceRed", "imagePath": ace_of_spades, "isFlipped": false,"solved": false}],
+    [0, {"code": "AceBlack", "imagePath": ace_of_clubs, "isFlipped": false, "solved": false}],
+    [1, {"code": "AceBlack", "imagePath": ace_of_spades, "isFlipped": false, "solved": false}],
+    // [2, {"code": "AceRed", "imagePath": ace_of_diamonds, "isFlipped": false, "solved": false}],
+    // [3, {"code": "AceRed", "imagePath": ace_of_hearts, "isFlipped": false,"solved": false}],
 
-    [4, {"code": "2Black", "imagePath": two_of_spades, "isFlipped": false,"solved": false}],
-    [5, {"code": "2Black", "imagePath": two_of_clubs, "isFlipped": false,"solved": false}],
+    // [4, {"code": "2Black", "imagePath": two_of_spades, "isFlipped": false,"solved": false}],
+    // [5, {"code": "2Black", "imagePath": two_of_clubs, "isFlipped": false,"solved": false}],
     [6, {"code": "2Red", "imagePath": two_of_hearts, "isFlipped": false,"solved": false}],
     [7, {"code": "2Red", "imagePath": two_of_diamonds, "isFlipped": false,"solved": false}],
 
     [8, {"code": "3Black", "imagePath": three_of_spades, "isFlipped": false,"solved": false}],
     [9, {"code": "3Black", "imagePath": three_of_clubs, "isFlipped": false,"solved": false}],
-    [10, {"code": "3Red", "imagePath": three_of_hearts, "isFlipped": false,"solved": false}],
-    [11, {"code": "3Red", "imagePath": three_of_diamonds, "isFlipped": false,"solved": false}],
+    // [10, {"code": "3Red", "imagePath": three_of_hearts, "isFlipped": false,"solved": false}],
+    // [11, {"code": "3Red", "imagePath": three_of_diamonds, "isFlipped": false,"solved": false}],
 
     [12, {"code": "4Black", "imagePath": four_of_spades, "isFlipped": false,"solved": false}],
     [13, {"code": "4Black", "imagePath": four_of_clubs, "isFlipped": false,"solved": false}],
-    [14, {"code": "4Red", "imagePath": four_of_hearts, "isFlipped": false,"solved": false}],
-    [15, {"code": "4Red", "imagePath": four_of_diamonds, "isFlipped": false,"solved": false}],
+    // [14, {"code": "4Red", "imagePath": four_of_hearts, "isFlipped": false,"solved": false}],
+    // [15, {"code": "4Red", "imagePath": four_of_diamonds, "isFlipped": false,"solved": false}],
 
-    [16, {"code": "5Black", "imagePath": five_of_spades, "isFlipped": false,"solved": false}],
-    [17, {"code": "5Black", "imagePath": five_of_clubs, "isFlipped": false,"solved": false}],
+    // [16, {"code": "5Black", "imagePath": five_of_spades, "isFlipped": false,"solved": false}],
+    // [17, {"code": "5Black", "imagePath": five_of_clubs, "isFlipped": false,"solved": false}],
     [18, {"code": "5Red", "imagePath": five_of_hearts, "isFlipped": false,"solved": false}],
     [19, {"code": "5Red", "imagePath": five_of_diamonds, "isFlipped": false,"solved": false}],
 
@@ -113,36 +113,36 @@ class App extends Component{
 
     // [24, {"code": "7Black", "imagePath": seven_of_spades, "isFlipped": false,"solved": false}],
     // [25, {"code": "7Black", "imagePath": seven_of_clubs, "isFlipped": false,"solved": false}],
-    // [26, {"code": "7Red", "imagePath": seven_of_hearts, "isFlipped": false,"solved": false}],
-    // [27, {"code": "7Red", "imagePath": seven_of_diamonds, "isFlipped": false,"solved": false}],
+    [26, {"code": "7Red", "imagePath": seven_of_hearts, "isFlipped": false,"solved": false}],
+    [27, {"code": "7Red", "imagePath": seven_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [28, {"code": "8Black", "imagePath": eight_of_spades, "isFlipped": false,"solved": false}],
-    // [29, {"code": "8Black", "imagePath": eight_of_clubs, "isFlipped": false,"solved": false}],
+    [28, {"code": "8Black", "imagePath": eight_of_spades, "isFlipped": false,"solved": false}],
+    [29, {"code": "8Black", "imagePath": eight_of_clubs, "isFlipped": false,"solved": false}],
     // [30, {"code": "8Red", "imagePath": eight_of_hearts, "isFlipped": false,"solved": false}],
     // [31, {"code": "8Red", "imagePath": eight_of_diamonds, "isFlipped": false,"solved": false}],
 
     // [32, {"code": "9Black", "imagePath": nine_of_spades, "isFlipped": false,"solved": false}],
     // [33, {"code": "9Black", "imagePath": nine_of_clubs, "isFlipped": false,"solved": false}],
-    // [34, {"code": "9Red", "imagePath": nine_of_hearts, "isFlipped": false,"solved": false}],
-    // [35, {"code": "9Red", "imagePath": nine_of_diamonds, "isFlipped": false,"solved": false}],
+    [34, {"code": "9Red", "imagePath": nine_of_hearts, "isFlipped": false,"solved": false}],
+    [35, {"code": "9Red", "imagePath": nine_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [36, {"code": "10Black", "imagePath": ten_of_spades, "isFlipped": false,"solved": false}],
-    // [37, {"code": "10Black", "imagePath": ten_of_clubs, "isFlipped": false,"solved": false}],
+    [36, {"code": "10Black", "imagePath": ten_of_spades, "isFlipped": false,"solved": false}],
+    [37, {"code": "10Black", "imagePath": ten_of_clubs, "isFlipped": false,"solved": false}],
     // [38, {"code": "10Red", "imagePath": ten_of_hearts, "isFlipped": false,"solved": false}],
     // [39, {"code": "10Red", "imagePath": ten_of_diamonds, "isFlipped": false,"solved": false}],
 
     // [40, {"code": "JackBlack", "imagePath": jack_of_spades, "isFlipped": false,"solved": false}],
     // [41, {"code": "JackBlack", "imagePath": jack_of_clubs, "isFlipped": false,"solved": false}],
-    // [42, {"code": "JackRed", "imagePath": jack_of_hearts, "isFlipped": false,"solved": false}],
-    // [43, {"code": "JackRed", "imagePath": jack_of_diamonds, "isFlipped": false,"solved": false}],
+    [42, {"code": "JackRed", "imagePath": jack_of_hearts, "isFlipped": false,"solved": false}],
+    [43, {"code": "JackRed", "imagePath": jack_of_diamonds, "isFlipped": false,"solved": false}],
 
     // [44, {"code": "QueenBlack", "imagePath": queen_of_spades, "isFlipped": false,"solved": false}],
     // [45, {"code": "QueenBlack", "imagePath": queen_of_clubs, "isFlipped": false,"solved": false}],
-    // [46, {"code": "QueenRed", "imagePath": queen_of_hearts, "isFlipped": false,"solved": false}],
-    // [47, {"code": "QueenRed", "imagePath": queen_of_diamonds, "isFlipped": false,"solved": false}],
+    [46, {"code": "QueenRed", "imagePath": queen_of_hearts, "isFlipped": false,"solved": false}],
+    [47, {"code": "QueenRed", "imagePath": queen_of_diamonds, "isFlipped": false,"solved": false}],
 
-    // [48, {"code": "KingBlack", "imagePath": king_of_spades, "isFlipped": false,"solved": false}],
-    // [49, {"code": "KingBlack", "imagePath": king_of_clubs, "isFlipped": false,"solved": false}],
+    [48, {"code": "KingBlack", "imagePath": king_of_spades, "isFlipped": false,"solved": false}],
+    [49, {"code": "KingBlack", "imagePath": king_of_clubs, "isFlipped": false,"solved": false}],
     // [50, {"code": "KingRed", "imagePath": king_of_hearts, "isFlipped": false,"solved": false}],
     // [51, {"code": "KingRed", "imagePath": king_of_diamonds, "isFlipped": false,"solved": false}],
 
@@ -165,7 +165,7 @@ class App extends Component{
   firstCardId = -1;
   firstCard = null;
 
-  PAIRS_TO_WIN = 11;
+  PAIRS_TO_WIN = 13;
   numPairs = 0;
 
   // To prevent clicking other cards while showing wrong match
@@ -531,7 +531,6 @@ class App extends Component{
   componentDidMount(){
     console.log(this.getLeaderboard());
     console.log(this.getTime())
-    // console.log(this.state.leaderboard)
   }
 
   // *******************************************************
@@ -545,8 +544,8 @@ class App extends Component{
       <h1>Concentration Game</h1>
       <br></br>
 
-      <CardGroup style={{backgroundColor: "darkGreen", maxWidth: "fit-content", marginLeft: "auto", marginRight: "auto"}}>
-        <Card style={{whiteSpace: "pre-wrap", minWidth: "fit-content", maxWidth: "25%", minHeight: "fit-content"}}>
+      <CardGroup style={{backgroundColor: "darkGreen", maxWidth: "fit-content", marginLeft: "auto", marginRight: "auto", gap: "10px"}}>
+        <Card style={{whiteSpace: "pre-wrap", minWidth: "fit-content", maxWidth: "25%", minHeight: "fit-content", border: "0px", padding: "5px"}}>
             <CardTitle>Leaderboard</CardTitle>
             <CardBody>
               {this.state.leaderboard}
@@ -554,7 +553,7 @@ class App extends Component{
         
           </Card>
 
-          <Card style={{minWidth: "fit-content", whiteSpace: "pre-wrap", minHeight: "fit-content", border: "0px"}}>
+          <Card style={{minWidth: "fit-content", whiteSpace: "pre-wrap", minHeight: "fit-content", border: "0px", padding: "5px"}}>
             <CardTitle>High Score</CardTitle>
             <CardBody>
               {this.state.currentUserName}
@@ -565,49 +564,6 @@ class App extends Component{
 
           <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
       </CardGroup>
-      {/* <Row style={{maxWidth: "fit-content", marginLeft: "auto", marginRight: "auto"}}>
-        <Col sm="6">
-          <Card style={{whiteSpace: "pre-wrap", minWidth: "fit-content", maxWidth: "25%", minHeight: "fit-content"}}>
-            <CardTitle>Leaderboard</CardTitle>
-            <CardBody>
-              {this.state.leaderboard}
-            </CardBody>
-        
-          </Card>
-        </Col>
-        <Col sm="6">
-          <Card style={{minWidth: "fit-content", whiteSpace: "pre-wrap", minHeight: "fit-content"}}>
-            <CardTitle>High Score</CardTitle>
-            <CardBody>
-              {this.state.currentUserName}
-              <br/>
-              {this.state.currentUserFastest}
-            </CardBody>
-          </Card>
-        </Col>
-        <Col sm="6">
-          <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
-        </Col>
-      </Row> */}
-      
-      {/* <div className="flex-container" style={{backgroundColor: "darkGreen"}}>
-        <Card style={{whiteSpace: "pre-wrap", minWidth: "fit-content", maxWidth: "25%", minHeight: "fit-content"}}>
-          <CardTitle>Leaderboard</CardTitle>
-          <CardBody>
-            {this.state.leaderboard}
-          </CardBody>
-        
-        </Card>
-        <Card style={{minWidth: "fit-content", whiteSpace: "pre-wrap", minHeight: "fit-content"}}>
-          <CardTitle>High Score</CardTitle>
-          <CardBody>
-            {this.state.currentUserName}
-            <br/>
-            {this.state.currentUserFastest}
-        </CardBody>
-        </Card>
-        <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
-      </div> */}
     
       <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
       <RestartModal currentName={this.state.currentUserName} initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>

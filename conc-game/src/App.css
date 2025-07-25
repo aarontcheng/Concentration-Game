@@ -16,8 +16,8 @@ img{
 
 .card {
   background-color: transparent;
-  width: 64px;
-  height: 96px;
+  width: 70px;
+  height: 105px;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
