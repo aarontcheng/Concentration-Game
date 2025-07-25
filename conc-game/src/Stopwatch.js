@@ -2,6 +2,7 @@ import { Card, CardSubtitle, CardTitle, CardBody } from "reactstrap";
 import React, { Component } from "react";
 
 
+
 class Stopwatch extends Component{
     constructor(props) {
         super(props);
@@ -115,11 +116,12 @@ class Stopwatch extends Component{
 
     render() {
         return (
-            <div className={this.redOrGreenLight()} style={{minWidth: "fit-content", width:"200px"}}>
+            <div className={this.redOrGreenLight()} style={{minWidth: "fit-content", width:"200px", padding: "10px"}}>
                 <h3>Timer</h3>
                 <h2>{this.state.timer}</h2>
                 <button onClick={this.restart}>Restart</button>
             </div>
+            
         );
     }
 

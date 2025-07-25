@@ -68,7 +68,7 @@ import './App.css';
 import { Component } from 'react';
 import BoardTable  from './BoardTable';
 import RestartModal from './RestartModal';
-import { Button } from 'reactstrap';
+import { Button, Card, CardTitle, CardBody, Col, Row, CardGroup} from 'reactstrap';
 import Stopwatch from './Stopwatch';
 
 
@@ -544,23 +544,71 @@ class App extends Component{
     <div className="App">
       <h1>Concentration Game</h1>
       <br></br>
-      
-      <div className="flex-container">
-        <div style={{whiteSpace: "pre-wrap", backgroundColor: "darkGreen", minWidth: "fit-content", maxWidth: "25%"}}>
-          <h3>Leaderboard</h3>
-          {this.state.leaderboard}
-        </div>
-        <div style={{background: "purple", minWidth: "fit-content", whiteSpace: "pre-wrap"}}>
-          {this.state.currentUserName}:
-          <br/>
-          {this.state.currentUserFastest}
-        </div>
-        <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
-      </div>
-    
-      
 
-     
+      <CardGroup style={{backgroundColor: "darkGreen", maxWidth: "fit-content", marginLeft: "auto", marginRight: "auto"}}>
+        <Card style={{whiteSpace: "pre-wrap", minWidth: "fit-content", maxWidth: "25%", minHeight: "fit-content"}}>
+            <CardTitle>Leaderboard</CardTitle>
+            <CardBody>
+              {this.state.leaderboard}
+            </CardBody>
+        
+          </Card>
+
+          <Card style={{minWidth: "fit-content", whiteSpace: "pre-wrap", minHeight: "fit-content", border: "0px"}}>
+            <CardTitle>High Score</CardTitle>
+            <CardBody>
+              {this.state.currentUserName}
+              <br/>
+              {this.state.currentUserFastest}
+            </CardBody>
+          </Card>
+
+          <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
+      </CardGroup>
+      {/* <Row style={{maxWidth: "fit-content", marginLeft: "auto", marginRight: "auto"}}>
+        <Col sm="6">
+          <Card style={{whiteSpace: "pre-wrap", minWidth: "fit-content", maxWidth: "25%", minHeight: "fit-content"}}>
+            <CardTitle>Leaderboard</CardTitle>
+            <CardBody>
+              {this.state.leaderboard}
+            </CardBody>
+        
+          </Card>
+        </Col>
+        <Col sm="6">
+          <Card style={{minWidth: "fit-content", whiteSpace: "pre-wrap", minHeight: "fit-content"}}>
+            <CardTitle>High Score</CardTitle>
+            <CardBody>
+              {this.state.currentUserName}
+              <br/>
+              {this.state.currentUserFastest}
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="6">
+          <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
+        </Col>
+      </Row> */}
+      
+      {/* <div className="flex-container" style={{backgroundColor: "darkGreen"}}>
+        <Card style={{whiteSpace: "pre-wrap", minWidth: "fit-content", maxWidth: "25%", minHeight: "fit-content"}}>
+          <CardTitle>Leaderboard</CardTitle>
+          <CardBody>
+            {this.state.leaderboard}
+          </CardBody>
+        
+        </Card>
+        <Card style={{minWidth: "fit-content", whiteSpace: "pre-wrap", minHeight: "fit-content"}}>
+          <CardTitle>High Score</CardTitle>
+          <CardBody>
+            {this.state.currentUserName}
+            <br/>
+            {this.state.currentUserFastest}
+        </CardBody>
+        </Card>
+        <Stopwatch initialTime={this.state.initialTime} gameOver={this.state.gameOver} restart={this.restart} callback={this.returnSelf}></Stopwatch>
+      </div> */}
+    
       <BoardTable cards={this.state.cardsInfo} callback={this.handleClick}></BoardTable>
       <RestartModal currentName={this.state.currentUserName} initialTime={this.state.initialTime} finalTime={this.state.finalTime} restart={this.restart} toggle= {this.turnOffRestart} login = {this.login} showModal={this.state.showRestartModal}></RestartModal>
     </div>

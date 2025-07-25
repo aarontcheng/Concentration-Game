@@ -41,16 +41,30 @@ class RestartModal extends Component{
     getTime = () =>{
         // console.log("finalTime: " + this.props.finalTime);
         // console.log("initialTime: " + this.props.initialTime);
+        var time = Math.floor((this.props.finalTime - this.props.initialTime)/1000);
+
+        if (time == 0){
+            return "N/A"
+        }
+
         return Math.floor((this.props.finalTime - this.props.initialTime)/1000);
+    }
+
+    getName = () =>{
+        if (this.props.currentName == "" ){
+            return "N/A"
+        }
+
+        return this.props.currentName;
     }
 
     // https://stackoverflow.com/questions/45201351/masking-password-input-in-reactjs
     render(){
         return <Modal isOpen={this.props.showModal} toggle={this.props.restart}>
-            <ModalHeader><h2>Concentration Game</h2>Login to save your time<br/>Time: {this.getTime()} seconds</ModalHeader>
+            <ModalHeader><h2>Concentration Game</h2>Login to save your time and then press Start, or press Start to just play<br/>Time: {this.getTime()} seconds</ModalHeader>
             <ModalBody>
                 <div>
-                Current User: {this.props.currentName}
+                Current User: {this.getName()}
                 </div>
                 <InputGroup>
                     <InputGroupText>Username</InputGroupText>
